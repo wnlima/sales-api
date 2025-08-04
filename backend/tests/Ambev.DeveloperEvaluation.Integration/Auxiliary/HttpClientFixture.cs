@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Ambev.DeveloperEvaluation.WebApi.Features.Auth.AuthenticateUserFeature;
+using Microsoft.EntityFrameworkCore;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 
 namespace Ambev.DeveloperEvaluation.Integration.Auxiliary;
 
@@ -129,6 +131,57 @@ public sealed class HttpClientFixture : IDisposable
         _userSeedLoaded = true;
     }
 
+    public async Task BasicDataSeed()
+    {
+        await UserSeed();
+        await ProductSeed();
+    }
+    
+    public async Task ProductSeed()
+    {
+        if (_productSeedLoaded)
+            return;
+
+        var items = ProductTestData.GenerateProducts(25);
+
+        var bFirst = false;
+        foreach (var product in items)
+        {
+            if (!bFirst)
+                product.QuantityInStock = 100;
+
+            var response = await RequestSend(HttpMethod.Post, "/api/products", product, ManagerUser.Token);
+            response.EnsureSuccessStatusCode();
+        }
+
+        _productSeedLoaded = true;
+    }
+
+    public async Task SaleSeed()
+    {
+        if (_saleSeedLoaded)
+            return;
+
+        var items = SaleTestData.Generate(11);
+        var products = await DbContext.Products.AsNoTracking().ToListAsync();
+        var pCount = products.Count;
+        Random random = new();
+
+        foreach (var sale in items)
+        {
+            var pIdx = random.Next(pCount);
+            var product = products[pIdx];
+            var saleItem = new CreateSaleItemRequest();
+            saleItem.ProductId = product.Id;
+            saleItem.Quantity = 1;
+            sale.SaleItems = [saleItem];
+
+            var response = await RequestSend(HttpMethod.Post, "/api/sales", sale);
+            response.EnsureSuccessStatusCode();
+        }
+
+        _saleSeedLoaded = true;
+    }
     public void Dispose()
     {
         _scope.Dispose();

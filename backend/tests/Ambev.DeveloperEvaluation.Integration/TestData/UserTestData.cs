@@ -21,7 +21,7 @@ public static class UserTestData
     /// - Status (Active or Suspended)
     /// - Role (Customer or Admin)
     /// </summary>
-    private static readonly Faker<UserEntity> UserFaker = new Faker<UserEntity>()
+    private static readonly Faker<User> UserFaker = new Faker<User>()
         .RuleFor(u => u.Username, f => f.Internet.UserName())
         .RuleFor(u => u.Password, f => $"Test@{f.Random.Number(100, 999)}")
         .RuleFor(u => u.Email, f => f.Internet.Email())
@@ -35,7 +35,7 @@ public static class UserTestData
     /// that meet the system's validation requirements.
     /// </summary>
     /// <returns>A valid User entity with randomly generated data.</returns>
-    public static UserEntity GenerateValidUser()
+    public static User GenerateValidUser()
     {
         return UserFaker.Generate();
     }
