@@ -9,7 +9,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 /// <summary>
 /// Represents a user in the system with authentication and profile information.
-/// This entity follows domain-driven design principles and includes business rules validation.
+/// This  follows domain-driven design principles and includes business rules validation.
 /// </summary>
 public class User : BaseEntity, IUser
 {
@@ -29,7 +29,7 @@ public class User : BaseEntity, IUser
     /// Gets the user's phone number.
     /// Must be a valid phone number format following the pattern (XX) XXXXX-XXXX.
     /// </summary>
-    public string Phone { get; set; } = string.Empty ;
+    public string Phone { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets the hashed password for authentication.
@@ -42,7 +42,7 @@ public class User : BaseEntity, IUser
     /// Gets the user's role in the system.
     /// Determines the user's permissions and access levels.
     /// </summary>
-    public UserRole Role { get;     set; }
+    public UserRole Role { get; set; }
 
     /// <summary>
     /// Gets the user's current status.
@@ -87,7 +87,7 @@ public class User : BaseEntity, IUser
     }
 
     /// <summary>
-    /// Performs validation of the user entity using the UserValidator rules.
+    /// Performs validation of the user  using the UserValidator rules.
     /// </summary>
     /// <returns>
     /// A <see cref="ValidationResultDetail"/> containing:

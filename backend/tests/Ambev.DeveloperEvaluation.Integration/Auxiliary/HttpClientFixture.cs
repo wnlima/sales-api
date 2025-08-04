@@ -174,7 +174,7 @@ public sealed class HttpClientFixture : IDisposable
             var saleItem = new CreateSaleItemRequest();
             saleItem.ProductId = product.Id;
             saleItem.Quantity = 1;
-            sale.SaleItems = [saleItem];
+            sale.Items = [saleItem];
 
             var response = await RequestSend(HttpMethod.Post, "/api/sales", sale);
             response.EnsureSuccessStatusCode();
