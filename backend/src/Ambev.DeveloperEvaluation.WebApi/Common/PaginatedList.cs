@@ -11,6 +11,8 @@ public class PaginatedList<T> : List<T>
 
     public bool HasPrevious => CurrentPage > 1;
     public bool HasNext => CurrentPage < TotalPages;
+    public int AvailableItems { get; set; }
+    public IEnumerable<T> Data { get; internal set; }
 
     public PaginatedList(List<T> items, int count, int pageNumber, int pageSize)
     {
