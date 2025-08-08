@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="xunit" Version="2.9.3" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.3">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector" Version="6.0.4">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.msbuild" Version="6.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Bogus" Version="35.6.3" />
+		<PackageReference Include="FluentAssertions" Version="8.5.0" />
+		<PackageReference Include="NSubstitute" Version="5.3.0" />
+		<PackageReference Include="Roslynator.Analyzers" Version="4.14.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Roslynator.Testing.CSharp.Xunit" Version="4.14.0" />
+		<PackageReference Include="AutoMapper" Version="15.0.1" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Users/Ambev.UsersDeveloperEvaluation.Application/Ambev.UsersDeveloperEvaluation.Application.csproj" />
+    <ProjectReference Include="../../src/Users/Ambev.UsersDeveloperEvaluation.Common/Ambev.UsersDeveloperEvaluation.Common.csproj" />
+    <ProjectReference Include="../../src/Users/Ambev.UsersDeveloperEvaluation.Domain/Ambev.UsersDeveloperEvaluation.Domain.csproj" />
+    <ProjectReference Include="../../src/Users/Ambev.UsersDeveloperEvaluation.Infrastructure/Ambev.UsersDeveloperEvaluation.Infrastructure.csproj" />
+    <ProjectReference Include="../../src/Users/Ambev.UsersDeveloperEvaluation.IoC/Ambev.UsersDeveloperEvaluation.IoC.csproj" />
+    <ProjectReference Include="../../src/Users/Ambev.UsersDeveloperEvaluation.WebApi/Ambev.UsersDeveloperEvaluation.WebApi.csproj" />
+  </ItemGroup>
+</Project>

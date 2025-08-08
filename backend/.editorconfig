@@ -1,4 +1,8 @@
 ﻿[*.cs]
-
+root = true
+dotnet_diagnostic.IDE0160.severity = warning
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+dotnet_diagnostic.IDE0005.severity = warning
 # IDE0290: Use primary constructor
 csharp_style_prefer_primary_constructors = false
