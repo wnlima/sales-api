@@ -1,86 +1,114 @@
-# Developer Evaluation Project
+# Projeto E-commerce: Gerenciamento de Vendas, Produtos e Usuários
+![C4 Model - Contexto](/docs/diagrams/C4-Context.png)
+*Diagrama de Contexto*
+![C4 Model - Containers](/docs/diagrams/C4-Containers.png)
+ *Diagrama de Containers*
 
-`READ CAREFULLY`
+## 🚀 Visão Geral do Projeto
 
-## Instructions
-**The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**
+O **Projeto E-commerce** é uma iniciativa para desenvolver uma API de e-commerce robusta, escalável e resiliente, com foco no gerenciamento de vendas, produtos e usuários. Desenvolvido com uma arquitetura de **Microsserviços** e utilizando as tecnologias **C\#/.NET 8+**, o projeto visa fornecer uma plataforma sólida para o núcleo de um sistema de vendas online. Nosso objetivo é construir uma solução de alta performance que possa ser facilmente expandida e integrada a outros sistemas, como de pagamentos, entrega e controle de fraude.
 
-- The code must be versioned in a public Github repository and a link must be sent for evaluation once completed
-- Upload this template to your repository and start working from it
-- Read the instructions carefully and make sure all requirements are being addressed
-- The repository must provide instructions on how to configure, execute and test the project
-- Documentation and overall organization will also be taken into consideration
+Este repositório contém o código-fonte do **Produto Mínimo Viável (MVP)**, implementado como uma prova de conceito (POC) para validar a arquitetura proposta e as principais funcionalidades de e-commerce.
 
-## Use Case
-**You are a developer on the DeveloperStore team. Now we need to implement the API prototypes.**
+## ✨ Destaques da Arquitetura e Tecnologia
 
-As we work with `DDD`, to reference entities from other domains, we use the `External Identities` pattern with denormalization of entity descriptions.
+  * **Arquitetura:** Microsserviços com Domain-Driven Design (DDD), CQRS e Padrão Saga.
+  * **Linguagem & Framework:** C\# / .NET 8+.
+  * **Bancos de Dados:** PostgreSQL (exclusivamente).
+  * **Comunicação Assíncrona:** RabbitMQ como Message Broker, essencial para a orquestração de transações com o Padrão Saga.
+  * **Cache & Resiliência:** Redis para otimização de performance e gerenciamento de estado.
+  * **Orquestração:** Conteinerização com Docker e preparação para implantação em Kubernetes.
+  * **Infraestrutura como Código (IaC):** Terraform para gestão de infraestrutura multi-cloud.
+  * **Segurança:** Autenticação via JWT, gerenciamento de senhas com `BCryptPasswordHasher` e Secure by Design.
+  * **Observabilidade:** Preparação para OpenTelemetry para traces, logs e métricas, visando integração com ferramentas de mercado (Datadog, Elastic, Dynatrace).
 
-Therefore, you will write an API (complete CRUD) that handles sales records. The API needs to be able to inform:
+## 📖 Sumário da Documentação
 
-* Sale number
-* Date when the sale was made
-* Customer
-* Total sale amount
-* Branch where the sale was made
-* Products
-* Quantities
-* Unit prices
-* Discounts
-* Total amount for each item
-* Cancelled/Not Cancelled
+Para facilitar a navegação e o entendimento do projeto, consulte os seguintes documentos essenciais:
 
-It's not mandatory, but it would be a differential to build code for publishing events of:
-* SaleCreated
-* SaleModified
-* SaleCancelled
-* ItemCancelled
+  * **🏛️ Decisões Arquiteturais Chave (/ARCHITECTURE\_DECISIONS.md):** Um resumo conciso das principais escolhas de arquitetura e padrões de design do projeto, explicando o *porquê* de cada decisão.
+      * [🏛️ ARQUITETURA\_DECISIONS.md](/ARCHITECTURE_DECISIONS.md)
+  * **Visão Estratégica Completa (PDF):** Aprofunde-se no documento estratégico principal que detalha o escopo, requisitos de negócio e a arquitetura geral da solução.
+      * [📄 Developer Evaluation - Visão Estratégica e Arquitetura da Solução.pdf](/Developer Evaluation - Visão Estratégica e Arquitetura da Solução.pdf)
+  * **Guias Essenciais para Desenvolvedores:**
+      * [🚀 Inicie Aqui\! (GET\_STARTED.md)](/standards/GET_STARTED.md): Guia passo a passo para configurar seu ambiente de desenvolvimento e executar o projeto localmente.
+      * [🤝 Como Contribuir (CONTRIBUTING.md)](/standards/CONTRIBUTING.md): Entenda nosso fluxo de trabalho, padrões de commit e o processo para Pull Requests.
+      * [🧑‍💻 Diretrizes de Codificação (CODING\_GUIDELINES.md)](/standards/CODING_GUIDELINES.md): Conheça os padrões de código C\#/.NET, boas práticas e princípios de design aplicados no projeto.
+      * [🧪 Diretrizes de Testes (TESTING\_GUIDELINES.md)](/standards/TESTING_GUIDELINES.md): Saiba mais sobre nossa estratégia de testes, os tipos de testes (unitários, integração), e as políticas de cobertura de código.
+  * **Detalhes da Infraestrutura:**
+      * [⚙️ Infraestrutura do Projeto (INFRASTRUCTURE.md)](/standards/INFRASTRUCTURE.md): Documentação sobre a configuração de Docker, Kubernetes, Infraestrutura como Código com Terraform e a estratégia multi-cloud.
+  * **Documentação dos Microsserviços:**
+      * [👤 Serviço de Usuários (README.md)](/docs/users-api.md): Documentação detalhada sobre o microsserviço responsável pelo gerenciamento de usuários e autenticação.
+      * [📦 Serviço de Produtos (README.md)](/docs/products-api.md): Documentação específica do microsserviço que gerencia o catálogo de produtos.
+      * [🛒 Serviço de Vendas (README.md)](/docs/sales-api.md): Documentação específica do microsserviço que gerencia o ciclo de vida das vendas.
 
-If you write the code, **it's not required** to actually publish to any Message Broker. You can log a message in the application log or however you find most convenient.
+## 🏛️ Estrutura do Repositório
 
-### Business Rules
+Este é um *monorepo* que organiza os diferentes microsserviços, bibliotecas compartilhadas e a documentação do projeto, conforme a estrutura abaixo:
 
-* Purchases above 4 identical items have a 10% discount
-* Purchases between 10 and 20 identical items have a 20% discount
-* It's not possible to sell above 20 identical items
-* Purchases below 4 items cannot have a discount
+```
+.
+├── .github/                                  # Configurações do GitHub Actions
+│   └── workflows/                            # Pipelines de CI/CD (ci-pipeline.yml)
+├── docs/                                     # Documentação de alto nível, diagramas e decisões arquiteturais
+│   ├── project-structure.md                  # Estrutura do projeto
+│   ├── tech-stack.md                         # Stack de tecnologia
+│   ├── users-api.md                          # Documentação do microsserviço de usuários
+│   ├── products-api.md                       # Documentação do microsserviço de produtos
+├── backend/                                  # Código-fonte do backend
+│   ├── src/
+│   │   ├── Users/
+│   │   ├── Products/
+│   │   └── Sales/
+│   ├── tests/
+│   └── docker-compose.yml                    # Arquivo para orquestração local de serviços (PostgreSQL, RabbitMQ, Redis)
+├── standards/                                # Padrões organizacionais e diretrizes
+├── README.md                                 # Este arquivo
+├── coverage-report.sh                        # Script para geração de relatório de cobertura de testes
+```
 
-These business rules define quantity-based discounting tiers and limitations:
+## ▶️ Rodando o Projeto Localmente (POC)
 
-1. Discount Tiers:
-   - 4+ items: 10% discount
-   - 10-20 items: 20% discount
+Para instruções detalhadas sobre como configurar seu ambiente de desenvolvimento e executar os microsserviços e suas dependências (PostgreSQL, RabbitMQ) localmente usando Docker, consulte o guia:
 
-2. Restrictions:
-   - Maximum limit: 20 items per product
-   - No discounts allowed for quantities below 4 items
+  * **[🚀 Inicie Aqui\! (GET\_STARTED.md)](/standards/GET_STARTED.md)**
 
-## Overview
-This section provides a high-level overview of the project and the various skills and competencies it aims to assess for developer candidates. 
+### Acesso às APIs (Swagger)
 
-See [Overview](/.doc/overview.md)
+Com os serviços rodando localmente:
 
-## Tech Stack
-This section lists the key technologies used in the project, including the backend, testing, frontend, and database components. 
+  * **Serviço de Usuários API:** `http://localhost:5000/swagger` (ou a porta configurada em `launchSettings.json` ou no `docker-compose.yml`)
+  * **Serviço de Produtos API:** `http://localhost:5001/swagger` (ou a porta configurada)
+  * **Serviço de Vendas API:** `http://localhost:5002/swagger` (ou a porta configurada)
 
-See [Tech Stack](/.doc/tech-stack.md)
+## 🧪 Executando Testes
 
-## Frameworks
-This section outlines the frameworks and libraries that are leveraged in the project to enhance development productivity and maintainability. 
+Para executar os testes unitários e de integração de todos os serviços e gerar relatórios de cobertura:
 
-See [Frameworks](/.doc/frameworks.md)
+  * **[🧪 Diretrizes de Testes (TESTING\_GUIDELINES.md)](/standards/TESTING_GUIDELINES.md)**
 
-<!-- 
-## API Structure
-This section includes links to the detailed documentation for the different API resources:
-- [API General](./docs/general-api.md)
-- [Products API](/.doc/products-api.md)
-- [Carts API](/.doc/carts-api.md)
-- [Users API](/.doc/users-api.md)
-- [Auth API](/.doc/auth-api.md)
--->
+Resumidamente, na pasta `backend/`:
 
-## Project Structure
-This section describes the overall structure and organization of the project files and directories. 
+```bash
+./coverage-report.sh
+```
 
-See [Project Structure](/.doc/project-structure.md)
+## 🔒 Gerenciamento de Dados Sensíveis
+
+**ATENÇÃO:** No ambiente de desenvolvimento local, utilize o **User Secrets** do .NET. Para ambientes de Produção, é **mandatório** o uso de soluções de *Secrets Management* da nuvem (ex: Azure Key Vault, AWS Secrets Manager). Consulte as [🧑‍💻 Diretrizes de Codificação](/standards/CODING_GUIDELINES.md) para mais detalhes.
+
+## ⚙️ Pipelines de CI/CD (GitHub Actions)
+
+Este repositório utiliza GitHub Actions para Integração Contínua (CI). O pipeline (`.github/workflows/ci-pipeline.yml`) automatiza:
+
+  * Build dos projetos.
+  * Execução de testes e verificação de cobertura mínima.
+  * (Futuras etapas) Análise estática, build de imagens Docker e deployment.
+
+-----
+
+## 📞 Contato
+
+Para dúvidas, sugestões ou suporte, entre em contato com [Willian Lima](https://www.linkedin.com/in/w-lima).
+
+![Perfil do LinkedIn](https://media.licdn.com/dms/image/v2/D4D03AQGRObzA0_NRkg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1703104875697?e=1751500800&v=beta&t=jWwem7-YUYxBoktc3ayzIMLMdT4RlMQcsh-WlFW0pTM)
