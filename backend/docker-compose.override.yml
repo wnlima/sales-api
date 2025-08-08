@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  products-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RUN_MIGRATIONS=true
+    ports:
+      - "8081:80"
+
+  products-db:
+    ports:
+      - "5432:5432"
+
+  sales-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RUN_MIGRATIONS=true
+    ports:
+      - "8082:80"
+
+  sales-db:
+    ports:
+      - "5433:5432"
+
+  users-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RUN_MIGRATIONS=true
+    ports:
+      - "8083:80"
+
+  users-db:
+    ports:
+      - "5434:5432"
+
+  rabbitmq:
+    ports:
+      - "5672:5672"
+      - "15672:15672"
